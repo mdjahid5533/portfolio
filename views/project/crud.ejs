@@ -1,0 +1,30 @@
+<%- include('../partials/header') %><div class="container top-padding"> <h4 class="display-4 text-center " style="color: #143F72;">CRUD OPERATION</h4> <hr></div><div class="container"> <!-- Form --> <form action="/project/crud" method="POST" id="myForm"> <div class="row"> <div class="col-md-4 offset-md-4"> <div class="card bg-light"> <div class="card-body"> <p class="lead text-center"><strong>Please fill out this form to register</strong></p> <div class="form-group"> <input class="form-control form-control-sm <%= errors.name? 'is-invalid' : '' %> " type="text" name="name" placeholder="name" value="<%= values.name %>" style="border-radius: 0%;" minlength="3" maxlength="20" required> <div class="invaild-feedback" style="color: red;"> <small><%= errors.name %> </small> </div> </div> <div class="form-group"> <input class="form-control form-control-sm <%= errors.email? 'is-invalid' : '' %> " type="email" name="email" placeholder="Email" value="<%=values.email%>" style="border-radius: 0%;" required> <div class="invaild-feedback" style="color: red;"> <small><%= errors.email %> </small> </div> </div> <div class="form-group"> <input class="form-control form-control-sm <%= errors.phone? 'is-invalid' : '' %> " type="text" name="phone" placeholder="Phone" value="<%= values.phone %>" style="border-radius: 0%;" required> <div class="invaild-feedback" style="color: red;"> <small><%= errors.phone %> </small> </div> </div> <div class="form-group"> <select class="form-select form-control-sm <%= errors.branch? 'is-invalid' : '' %>" id="validationDefault04" name="branch" style="border-radius: 0%;" required> <option selected disabled value="">Branch...</option> <option>CSE</option> <option>BBA</option> </select> <div class="invaild-feedback" style="color: red;"> <small><%= errors.branch %> </small> </div> </div> <div class="form-group"> <input type="hidden" name="id"> </div> <input type="submit" class="btn btn-sm btn-block btn-outline-primary" style="border-radius: 0%;" value="Submit"> </div> </div> </div> </div> </form> <hr> <!-- Tables --> <table class="table table-bordered border-primary"> <thead class="table-dark"> <tr> <th scope="col">Name</th> <th scope="col">Branch</th> <th scope="col">Email</th> <th scope="col">Phone</th> <th scope="col">Action</th> </tr> </thead> <tbody> <% for(let user of contact.reverse()){ %> <tr> <th scope="row"><%= user.name %> </th> <td><%= user.branch %></td> <td><%= user.email %></td> <td><%= user.phone %></td> <td> <button class="btn btn-sm edit-btn btn-blue text-light" data-name="<%= user.name %>" data-branch="<%= user.branch %>" data-email="<%= user.email %>" data-phone="<%= user.phone %>" data-id="<%= user._id %>"> edit </button> <button class="btn-red btn btn-sm"><a href="/project/crud/delete/<%= user._id %>" style="color: white;">delete</a></button> </td> </tr> <% } %> </tbody> </table></div><%- include('../partials/footer') %>
+<script>
+  window.onload = function () {
+    let editBtn = document.getElementsByClassName('edit-btn');
+    let form = document.getElementById('myForm');
+
+    [...editBtn].forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        let {
+          name,
+          branch,
+          email,
+          phone,
+          id
+        } = e.target.dataset
+
+        form[0].value = name,
+          form[1].value = email,
+          form[2].value = phone,
+          form[3].value = branch,
+          form[4].value = id,
+          form[5].value = 'Update'
+      })
+    })
+  }
+</script>
+
+</body>
+
+</html>
