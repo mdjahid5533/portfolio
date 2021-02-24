@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
-const config = require('config')
+//const config = require('config')
 
 // import all middleware and router
 const middleware = require('./middleware/middleware')
@@ -25,10 +25,10 @@ router(app)
 app.use((req, res, next) => {
     let error = new Error('404 page not found')
     error.status = 404
-    next(error) 
+    next(error)
 })
 app.use((error, req, res, next) => {
-    if(error.status === 404){
+    if (error.status === 404) {
         return res.render('404/404', {
             title: '404 | Portfolio',
             path: '',
